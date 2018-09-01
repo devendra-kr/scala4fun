@@ -1,5 +1,5 @@
 /*==========================================
- Title:  Scala code for Dublicate Remover
+ Title:  Scala zipper method implemetation
  Author: Devendra Kumar
  MailId: devspirit2016@gmail.com
  Education: M. Tech From HCU
