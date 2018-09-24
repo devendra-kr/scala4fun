@@ -1,0 +1,151 @@
+Java 8 Features with Examples:-
+
+1. forEach() method in Iterable interface: have business logic in a loop for each of the elements in the Collection. 
+Exmple:-
+import java.util.List;
+import java.util.Map;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.lang.Integer;
+
+public class HelloForEach {
+ public static void main(String[] args) {
+
+  List < String > cityList = Arrays.asList("New York City", "Chicago", "Washington DC", "Denver");
+  iterateList(cityList);
+  System.out.println();
+
+  Map < String, String > countryCapitalMap = new HashMap < > ();
+  countryCapitalMap.put("US", "Wshington DC");
+  countryCapitalMap.put("England", "London");
+  countryCapitalMap.put("France", "Paris");
+  countryCapitalMap.put("India", "New Delhi");
+  mapDemo(countryCapitalMap);
+ }
+
+ public static void iterateList(List < String > list) {
+  list.forEach(l -> System.out.println("City: " + l));
+ }
+
+ public static void mapDemo(Map << ? , ? > map) {
+
+  map.forEach((k, v) -> {
+   System.out.println("Country " + k + ", Capital " + v);
+  });
+ }
+}
+
+2. Default and static methods in Interfaces:-
+Example:
+import java.util.List;
+import java.util.Map;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.lang.Integer;
+public class HelloWorld {
+ public static void main(String[] args) {
+  System.out.println();
+  MyClass obj = new MyClass();
+  obj.method2();
+  obj.method1("hi");
+  obj.log("dev");
+  obj.myMethod();
+ }
+ public interface Interface1 {
+  void method1(String str);
+  default void log(String str) {
+   System.out.println("I1 logging::" + str);
+  }
+  static void print(String str) {
+   System.out.println("Printing " + str);
+  }
+ }
+
+ public interface Interface2 {
+  void method2();
+  default void log(String str) {
+   System.out.println("I2 logging::" + str);
+  }
+ }
+
+ public static class MyClass implements Interface1, Interface2 {
+  @Override
+  public void method2() {}
+  @Override
+  public void method1(String str) {}
+  //MyClass won't compile without having it's own log() implementation
+  @Override
+  public void log(String str) {
+   System.out.println("MyClass logging::" + str);
+   Interface1.print("abc");
+  }
+  public void myMethod() {
+   System.out.println("internal method");
+  }
+ }
+}
+
+
+3. Functional Interfaces and Lambda Expressions:-
+Example:-
+public class LambdaExpDemo {
+ public static void main(String[] args) {
+
+  Runnable r = new Runnable() {
+   @Override
+   public void run() {
+    System.out.println("My Runnable");
+   }
+  };
+
+  Runnable r1 = () -> {
+   System.out.println("My Runnable for lambda expressions");
+  };
+  r.run();
+  r1.run();
+  Interface1 i1 = (s) -> System.out.println(s);
+  i1.method1("abc");
+ }
+
+ public interface Interface1 {
+  void method1(String str);
+  default void log(String str) {
+   System.out.println("I1 logging::" + str);
+  }
+  static void print(String str) {
+   System.out.println("Printing " + str);
+  }
+ }
+}
+
+
+
+4. Java Stream API for Bulk Data Operations on Collections:-
+Example:
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+public class StreamExample {
+
+	public static void main(String[] args) {
+		
+	List<Integer> list = new ArrayList<Integer>();
+	for(int i = 0; i< 100; i++) list.add(i);
+	
+	Stream<Integer> streamSeq = list.stream();
+	
+	Stream filterStreamSeq = streamSeq.filter( i -> i > 90);
+	
+	Stream<Integer> streamPall = list.parallelStream();
+	
+	Stream filterStreamPall = streamPall.filter( i -> i > 90);
+	
+	filterStreamSeq.forEach( p -> System.out.println("sequential " + p));
+	filterStreamPall.forEach( p -> System.out.println("parallel " + p));
+
+	}
+
+}
+
+5. Java Time API
