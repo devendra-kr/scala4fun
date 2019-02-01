@@ -150,3 +150,10 @@ def dropEveryN[T](n: Int, ls: List[T]): List[T] = {
 16. Split a list into two parts
 def split[T](n: Int, ls: List[T]): (List[T], List[T]) = ls.splitAt(n)
 def split[T](n: Int, ls: List[T]): (List[T], List[T]) = (ls.take(n), ls.drop(n))
+
+
+The Difference Between Currying and Partially Applied Functions:
+1. Currying:
+def sun(a: Int, b: Int) = a + b can be write as def sun(a: Int)(b: Int) = a + b
+2. Partially Applied
+def sun(a: Int, b: Int) = a + b can be write as def sun(a: Int, _: Int) it will return new fumtion like fun(_)
