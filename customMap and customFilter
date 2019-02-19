@@ -1,0 +1,43 @@
+/*Custom map and filter implementation. */
+
+val list = Range(0, 10).toList
+val double = (i: Int) => i * 2
+val isEven = (i: Int) => i % 2 == 0
+
+case class EMP(name: String, mobile: Long, gender: Char, address: String)
+
+val info = List(EMP("dev", 9505398922L, 'M', "Hyderabad"),
+                EMP("Sita", 9505342424L, 'F', "Delhi"),
+                EMP("Mahi", 9443298922L, 'M', "Varanasi"))
+
+val isMale = (e: EMP) => e.gender == 'M'
+val isFemale = (e: EMP) => e.gender == 'F'
+val name = (e: EMP) => e.name
+val nameWithMobile = (e: EMP) => (e.name, e.mobile)
+val nameWithAddess = (e: EMP) => (e.name, e.address)
+
+def customMap[A,B](f: (A) => B, ls: List[A]): List[B] = {
+  def mapCall[A,B](res: List[B], f: A => B, ls: List[A]): List[B] = ls match {
+    case Nil => res
+    case x :: y => mapCall(res ++ List(f(x)), f, y)
+  }
+  mapCall(List[B](), f, ls)
+}
+
+def customFilter[A](f: A => Boolean, ls: List[A]): List[A] = ls match {
+  case Nil => ls
+  case x :: y => f(x) match {
+    case true => List(x) ++ customFilter(f, y)
+    case false => customFilter(f,y)
+  }
+}
+
+
+println(customMap(double, list))
+
+println(customFilter(isEven, list))
+
+
+println(customMap(name, info))
+
+println(customFilter(isMale, info))
