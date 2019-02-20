@@ -7,13 +7,13 @@
 ========================================== */
 object Merge{
         def main(args: Array[String]): Unit = {
-        	println(merge(Range(0,10).toList,Range(10,20).toList))
+		println(merge(Range(0,10).toList,Range(10,20).toList))
+		println(merge(Range(0,10).toList,List('a','d','f','f','g','g')))
         }
-	def merge(list1: List[Int], list2: List[Int]): List[Int] = (list1, list2) match {
+	def merge[A,B](list1: List[A], list2: List[B]): List[Any] = (list1, list2) match {
 	      case (Nil, Nil) => Nil
 	      case (Nil, _) => list2
 	      case (_, Nil) => list1
 	      case (_, x :: y) => merge(list1 ++ List(x),y)
-      	}
-  	}
+	}
 }
