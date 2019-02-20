@@ -8,6 +8,7 @@
 object Distinct{ 
  	def main(args: Array[String]): Unit = {
 		 println(distinct(List(1L, 2L, 4L, 1L, 5L, 2L)))
+		 println(distinct(List('a','b','v','d','a','s','d','a','f','g','r','t')))
 	}
 	def distinct[A](ls: List[A]): List[A] = {
   		def dis(res: List[A], ls: List[A]): List[A] = ls match {
