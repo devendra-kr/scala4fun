@@ -15,6 +15,8 @@ val info = List(EMP("dev", 9505398922L, 'M', "Hyderabad"),
 val double = (i: Int) => i * 2
 val isEven = (i: Int) => i % 2 == 0
 
+val flat = (x: Int) => x
+
 val isMale = (e: EMP) => e.gender == 'M'
 val isFemale = (e: EMP) => e.gender == 'F'
 val name = (e: EMP) => e.name
@@ -66,13 +68,5 @@ println("Employee name:" + map(name, info))
 
 println("\n")
 
-// println(faltMap(flat, listOfList))
+println("Flat the list" + faltMap(flat, listOfList))
 println("Double the list of elements and flat it:" + faltMap(double, listOfList))
-
-
-
-
-
-
-
-
