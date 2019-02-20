@@ -7,14 +7,16 @@
 ========================================== */
 object Distinct{ 
  	def main(args: Array[String]): Unit = {
-		val inList = List(1L, 2L, 4L, 1L, 5L, 2L)
-		println(fun(inList))
+		 println(distinct(List(1L, 2L, 4L, 1L, 5L, 2L)))
 	}
-	def fun(list: List[Long]) = {
-		var res = List[Long]()
-		list.foreach(l => {
-			if(!res.contains(l)) res = res ++ List(l)
-		})
-		res
+	def distinct[A](ls: List[A]): List[A] = {
+  		def dis(res: List[A], ls: List[A]): List[A] = ls match {
+    			case Nil => res
+    			case x :: y => res.contains(x) match {
+      				case true => dis(res, y)
+      				case false => dis(res ++ List(x), y) 
+    			}
+  		}
+  		dis(List[A](), ls)
 	}
 }
