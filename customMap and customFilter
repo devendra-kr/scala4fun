@@ -1,8 +1,8 @@
-/*Custom map and filter implementation. */
+
+/* Collections */
 
 val list = Range(0, 10).toList
-val double = (i: Int) => i * 2
-val isEven = (i: Int) => i % 2 == 0
+val listOfList = List(Range(0,10).toList, Range(10, 20).toList)
 
 case class EMP(name: String, mobile: Long, gender: Char, address: String)
 
@@ -10,34 +10,69 @@ val info = List(EMP("dev", 9505398922L, 'M', "Hyderabad"),
                 EMP("Sita", 9505342424L, 'F', "Delhi"),
                 EMP("Mahi", 9443298922L, 'M', "Varanasi"))
 
+/* anonymous function */ 
+
+val double = (i: Int) => i * 2
+val isEven = (i: Int) => i % 2 == 0
+
 val isMale = (e: EMP) => e.gender == 'M'
 val isFemale = (e: EMP) => e.gender == 'F'
 val name = (e: EMP) => e.name
 val nameWithMobile = (e: EMP) => (e.name, e.mobile)
 val nameWithAddess = (e: EMP) => (e.name, e.address)
 
-def customMap[A,B](f: (A) => B, ls: List[A]): List[B] = {
-  def mapCall[A,B](res: List[B], f: A => B, ls: List[A]): List[B] = ls match {
-    case Nil => res
-    case x :: y => mapCall(res ++ List(f(x)), f, y)
-  }
-  mapCall(List[B](), f, ls)
-}
 
-def customFilter[A](f: A => Boolean, ls: List[A]): List[A] = ls match {
+/* filter, map and flatMap implementation. */
+
+def filter[A](f: A => Boolean, ls: List[A]): List[A] = ls match {
   case Nil => ls
   case x :: y => f(x) match {
-    case true => List(x) ++ customFilter(f, y)
-    case false => customFilter(f,y)
+    case true => List(x) ++ filter(f, y)
+    case false => filter(f,y)
   }
 }
 
+def map[A,B](f: (A) => B, ls: List[A]): List[B] = {
+  def mapRec[A,B](res: List[B], f: A => B, ls: List[A]): List[B] = ls match {
+    case Nil => res
+    case x :: y => mapRec(res ++ List(f(x)), f, y)
+  }
+  mapRec(List[B](), f, ls)
+}
 
-println(customMap(double, list))
+def faltMap[A,B](f: (A) => B, ls: List[List[A]]): List[B] = {
+  def flatMapRec[A,B](res: List[B], f: (A) => B, ls: List[List[A]]): List[B] = ls match {
+    case Nil => res
+    case x :: y => flatMapRec(res ++ this.map(f,x), f, y)
+  }
+  flatMapRec(List[B](), f, ls)
+}
 
-println(customFilter(isEven, list))
+/* Operations */
+
+println("List:" + list)
+println("Employee list:" + info)
+println("List of list:" + listOfList)
+println("\n")
+
+println("Even Number:" + filter(isEven, list))
+println("Male Employee:" + filter(isMale, info))
+
+println("\n")
 
 
-println(customMap(name, info))
+println("Double the list of elements:" + map(double, list))
+println("Employee name:" + map(name, info))
 
-println(customFilter(isMale, info))
+println("\n")
+
+// println(faltMap(flat, listOfList))
+println("Double the list of elements and flat it:" + faltMap(double, listOfList))
+
+
+
+
+
+
+
+
