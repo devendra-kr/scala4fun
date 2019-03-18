@@ -1,0 +1,11 @@
+def moveZeroAtEnd(ls: List[Int]): List[Int] = {
+  def f(res: List[Int], zero: Int, ls: List[Int]): (List[Int], Int) = ls match {
+    case Nil => (res, zero)
+    case x :: xs => x match {
+      case 0 => f(res, zero + 1, xs)
+      case _  => f(res :+ x, zero, xs)
+    }
+  }
+  val res = f(Nil, 0, ls)
+   res._1 ++ List.fill(res._2)(0)
+}
