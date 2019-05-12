@@ -1,0 +1,10 @@
+def findSum(ls: List[Int], x: Int, y: Int): Boolean = {
+  val sortedList = ls.sorted
+  def fun(i: Int, j: Int): Boolean = {
+    if(i >= ls.length || j <= -1) false
+    else if(sortedList(i) + sortedList(j) == x + y) true
+    else if(sortedList(i) + sortedList(j) > x + y) fun(i, j-1)
+    else fun(i + 1, j)
+  }
+  fun(0,ls.length-1)
+}
