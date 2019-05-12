@@ -1,0 +1,17 @@
+import scala.util.control.Breaks._
+
+def firstNonRepeating(ls: List[Int]) = {
+  def fun(i: Int, j: Int): Boolean = {
+    if(j >= ls.length) false
+    else if(i != j && ls(i) == ls(j)) true
+    else fun(i, j+1)
+  }
+  breakable{
+    for(i <- 0 until ls.length){
+      if(!fun(i, 0)){
+        println(" " + ls(i))
+        break
+      }
+    }
+  }
+}
