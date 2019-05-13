@@ -1,0 +1,47 @@
+// Start writing your ScalaFiddle code here
+What is Funtional programming. Why is important.
+What is Pure funtion?
+Is Scala pure funtional programming lanaguage? If yes, why its has class and object.
+What is Option in Scala?
+Difference between foldLeft and foldRight?
+What types of opration support by fold?
+Difference between fold and reduce?
+Sum the list of elements using foldLeft?
+
+1. val ls = List(Some(1), None, Some(2), Some(3), None)  is given expected o/p: List(1, 2, 3)
+Ans: ls.flatten
+
+2. find kth element in a list from last.
+def findlastkth(ls: List[Int], k: Int) = {
+	val len = ls.length
+	(len < 0 | k > len | k <= 0) match {
+  	case  true => -1
+  	case _ => ls(len - k)
+	}
+}
+
+println(findlastkth(List(5,4,3,2,1), 4))
+
+3. List("2 orange", "3 banana", "5 apple", "10 orange", "4 banana") is given and expected o/p: (banana -> List(3, 4), apple -> List(5), orange -> List(2, 10))
+def grupedWithValues(ls: List[String]) = {
+ ls.map(x => {
+   val r = x.split(" ")
+   (r(0), r(1))
+ }).groupBy(_._2).mapValues(_.map(_._1))
+}
+
+println(grupedWithValues(List("2 orange", "3 banana", "5 apple", "10 orange", "4 banana")))
+
+
+4. Find any two element (x, y) in the list those product is k.
+def hasProductk(ls: List[Int], k: Int): (Int, Int) = {
+  def fun(m: Map[Int, Int], ls: List[Int]): Map[Int, Int] = ls match {
+    case Nil => m
+    case x :: xs => if(x == k || k % x == 0) fun(m + (x -> k/x), xs) else fun(m, xs)
+  }
+  val m = fun(Map[Int, Int](), ls)
+  m.filter(x => m.get(x._2).isDefined)
+  if(m.size >= 2 ) m.take(m.size/2).head else (-1, -1)
+}
+
+println(hasProductk(List(10, 20, 5, 4, 3, 2, 1), 20))
