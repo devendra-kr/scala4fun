@@ -7,3 +7,6 @@
 }  
 
 println(powerSet("abc".toSet).map(_.mkString("")))
+
+
+//  def powerset[A](s: Set[A]) = s.foldLeft(Set(Set.empty[A])) { case (ss, el) => ss ++ ss.map(_ + el)}
