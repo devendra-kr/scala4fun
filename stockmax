@@ -1,0 +1,68 @@
+import java.io._
+import java.math._
+import java.security._
+import java.text._
+import java.util._
+import java.util.concurrent._
+import java.util.function._
+import java.util.regex._
+import java.util.stream._
+
+object Solution {
+
+    // Complete the stockmax function below.
+    def stockmax(prices: Array[Int]): Int = {
+        /*def stock(res: Int, prices: Array[Int]): Int = prices.length <= 0 match {
+            case true => res
+            case false => {
+
+            }        
+        }*/
+        def stockBuy(buy: Array[Int]): (Int, Int) = {
+            def fun(res: Int, index: Int): (Int, Int) = {
+                if(index < buy.length-1 && buy(index) < buy(index+1))
+                    fun(res + buy(index), index + 1)
+                else (res, index)
+            }
+            fun(0, 0)
+        }
+      
+        var sell = 0
+        /*for(i <- 0 until prices.length){
+            val buy = stockBuy(prices.drop(i))
+            if(buy._2 > 0 && buy._2 < prices.length){
+                sell = sell + prices(i + buy._1) * buy._1 - buy._1
+            }
+        }*/
+        var nextIndex = 0
+        while(nextIndex < prices.length){
+            val buy = stockBuy(prices.drop(nextIndex))
+            if(buy._2 > 0 && buy._2 < prices.length){
+                sell = sell + prices(nextIndex + buy._2) * buy._2 - buy._1
+                nextIndex = nextIndex + buy._2
+            }
+            else nextIndex = nextIndex + 1
+        }
+        sell
+        
+    }
+
+    def main(args: Array[String]) {
+        val stdin = scala.io.StdIn
+
+        val printWriter = new PrintWriter(sys.env("OUTPUT_PATH"))
+
+        val t = stdin.readLine.trim.toInt
+
+        for (tItr <- 1 to t) {
+            val n = stdin.readLine.trim.toInt
+
+            val prices = stdin.readLine.split(" ").map(_.trim.toInt)
+            val result = stockmax(prices)
+
+            printWriter.println(result)
+        }
+
+        printWriter.close()
+    }
+}
