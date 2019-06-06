@@ -37,11 +37,11 @@ println(grupedWithValues(List("2 orange", "3 banana", "5 apple", "10 orange", "4
 def hasProductk(ls: List[Int], k: Int): (Int, Int) = {
   def fun(m: Map[Int, Int], ls: List[Int]): Map[Int, Int] = ls match {
     case Nil => m
-    case x :: xs => if(x == k || k % x == 0) fun(m + (x -> k/x), xs) else fun(m, xs)
+    case x :: xs => if(x != 0 && k % x == 0) fun(m + (x -> k/x), xs) else fun(m, xs)
   }
   val m = fun(Map[Int, Int](), ls)
-  m.filter(x => m.get(x._2).isDefined)
-  if(m.size >= 2 ) m.take(m.size/2).head else (-1, -1)
+  val filteredMap = m.filter(x => m.get(x._2).isDefined)
+  if(filteredMap.size >= 2 ) filteredMap.take(filteredMap.size/2).head else (-1, -1)
 }
 
 println(hasProductk(List(10, 20, 5, 4, 3, 2, 1), 20))
