@@ -30,6 +30,14 @@ def groupedWithValues(ls: List[String]) = {
  }).groupBy(_._2).mapValues(_.map(_._1))
 }
 
+OR
+def groupedWithValues(ls: List[String]) = {
+ ls.map(x => {
+   val r = x.split(" ")
+   (r(0), r(1))
+ }).groupBy(_._2).transform((k,v) => v.map(x=> x._1) )
+}
+
 OR 
 def groupedWithValues(ls: List[String]) = {
  val list = ls.map(x => {
