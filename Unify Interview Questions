@@ -43,5 +43,25 @@ def hasProductk(ls: List[Int], k: Int): (Int, Int) = {
   val filteredMap = m.filter(x => m.get(x._2).isDefined)
   if(filteredMap.size >= 2 ) filteredMap.take(filteredMap.size/2).head else (-1, -1)
 }
+OR
+def findProductElements(ls: List[Int], k: Int) = {
+  def find(m: Map[Int, Int], ls: List[Int]): (Int, Int) = {
+    ls match {
+      case Nil => (-1, -1)
+      case x :: xs => {
+        (x != 0 && k % x == 0) match {
+          case true => {
+            m.get(k/x) match {
+              case Some(res) => (k/x, x)
+              case None => find(m + (x -> k/x), xs)
+            }
+          }
+          case false => find(m, xs)
+        }
+      }
+    }
+  }
+  find(Map(), ls)
+}
 
 println(hasProductk(List(10, 20, 5, 4, 3, 2, 1), 20))
