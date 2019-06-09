@@ -23,11 +23,29 @@ def findlastkth(ls: List[Int], k: Int) = {
 println(findlastkth(List(5,4,3,2,1), 4))
 
 3. List("2 orange", "3 banana", "5 apple", "10 orange", "4 banana") is given and expected o/p: (banana -> List(3, 4), apple -> List(5), orange -> List(2, 10))
-def grupedWithValues(ls: List[String]) = {
+def groupedWithValues(ls: List[String]) = {
  ls.map(x => {
    val r = x.split(" ")
    (r(0), r(1))
  }).groupBy(_._2).mapValues(_.map(_._1))
+}
+
+OR 
+def groupedWithValues(ls: List[String]) = {
+ val list = ls.map(x => {
+   val r = x.split(" ")
+   (r(1), r(0).toInt)
+ })
+ def grouped(m: Map[String, List[Int]], ls: List[(String, Int)]): Map[String, List[Int]] = ls match {
+   case Nil => m
+   case x :: xs => {
+     m.get(x._1) match {
+       case Some(v) => grouped(m + (x._1 -> (v :+ x._2)), xs)
+       case None => grouped(m + (x._1 -> List(x._2)), xs)
+     }
+   }
+ }
+ grouped(Map(), list)
 }
 
 println(grupedWithValues(List("2 orange", "3 banana", "5 apple", "10 orange", "4 banana")))
