@@ -29,7 +29,7 @@ val nameWithAddess = (e: EMP) => (e.name, e.address)
 def filter[A](f: A => Boolean, ls: List[A]): List[A] = ls match {
   case Nil => ls
   case x :: y => f(x) match {
-    case true => List(x) ++ filter(f, y)
+    case true => List(x) ++ filter(f, y) // non tail recursion. 
     case false => filter(f,y)
   }
 }
