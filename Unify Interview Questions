@@ -1,20 +1,42 @@
 // Start writing your ScalaFiddle code here
-What is Funtional programming. Why is important.
-What is Pure funtion?
-Is Scala pure funtional programming lanaguage? If yes, why its has class and object.
-What is Option in Scala?
-Difference between foldLeft and foldRight?
-What types of opration support by fold?
-Difference between fold and reduce?
-Sum the list of elements using foldLeft?
+Q1 : What is Funtional programming. Why is important.
+Ans: Funtional programming = Pure Function + immutable Variable.
+Important:-
+1. Focus on what need to do instance of how will do.
+2. Good for concurrency control and parallelism.
+3. Easy to test and debug the code.
 
-1. val ls = List(Some(1), None, Some(2), Some(3), None)  is given expected o/p: List(1, 2, 3)
+Q2 : What is Pure funtion?
+Ans: If function output only depends on its input params and internal logic.
+
+Q3 : Is Scala pure funtional programming lanaguage? If yes, why its has class and object.
+Ans: Yes, and its has class and object because its also suport for java and other object oriented community developers.
+
+Q4 : What is Option in Scala?
+Ans: Optional class use handle Exception where exception might be due to null value. It hold either Some of value or None.
+
+Q5 : Difference between foldLeft and foldRight?
+Ans: As their names implied, foldLeft starts from the left side (the first value) and the values are added to the combining operation in left-to-right order.
+foldRight, on the contrary, starts from the right side (the last value) and the values are processed in right-to-left order.
+eg:- list.fold(0)(_ + _)
+
+Q6 : What types of opration support by fold?
+Ans: 
+
+Q7 : Difference between fold and reduce?
+Ans: foldLeft: initial value has to be passed
+reduceLeft: takes first element of the collection as initial value and throws exception if collection is empty
+
+Q8 : Sum the list of elements using foldLeft?
+Ans: list.fold(0)(_ + _)
+
+1. val ls = List(Some(1), None, Some(2), Some(3), None) is given expected o/p: List(1, 2, 3)
 Ans: ls.flatten
 
 2. find kth element in a list from last.
 def findlastkth(ls: List[Int], k: Int) = {
 	val len = ls.length
-	(len < 0 | k > len | k <= 0) match {
+	(len == 0 | k > len | k < 0) match {
   	case  true => -1
   	case _ => ls(len - k)
 	}
