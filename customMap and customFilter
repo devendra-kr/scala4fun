@@ -25,13 +25,25 @@ val nameWithAddess = (e: EMP) => (e.name, e.address)
 
 
 /* filter, map and flatMap implementation. */
-
+// non tail recursion. 
 def filter[A](f: A => Boolean, ls: List[A]): List[A] = ls match {
   case Nil => ls
   case x :: y => f(x) match {
-    case true => List(x) ++ filter(f, y) // non tail recursion. 
+    case true => List(x) ++ filter(f, y) // here List(x) will store in stack memory until all call get complete. 
     case false => filter(f,y)
   }
+}
+
+// tail recursion. 
+def customFilter[A](f: A => Boolean, ls: List[A]): List[A] = {
+  def filter(ls: List[A], res: List[A]): List[A] = ls match {  // here we use extra memory to stored the result.
+    case Nil => res
+    case x::xs => f(x) match {
+      case true => filter(xs, res :+ x) 
+      case false => filter(xs, res)
+    }
+  }
+  filter(ls, Nil)
 }
 
 def map[A,B](f: (A) => B, ls: List[A]): List[B] = {
