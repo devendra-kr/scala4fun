@@ -21,7 +21,7 @@ foldRight, on the contrary, starts from the right side (the last value) and the 
 eg:- list.fold(0)(_ + _)
 
 Q6 : What types of opration support by fold?
-Ans: 
+Ans: Binary
 
 Q7 : Difference between fold and reduce?
 Ans: foldLeft: initial value has to be passed
