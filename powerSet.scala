@@ -30,5 +30,10 @@ def powerset[A](s: Set[A]) = {
   
   println(powerset("abc"))
 
+//left ford vs right fold.
+println(powerset1(Set("a", "b")))
+def powerset1[A](s: Set[A]) = s.foldLeft(Set(Set.empty[A])) { case (ss, el) => ss ++ ss.map(_ + el)}
 
-def powerset[A](s: Set[A]) = s.foldLeft(Set(Set.empty[A])) { case (ss, el) => ss ++ ss.map(_ + el)}
+println(powerset2(Set("a", "b")))
+def powerset2[A](s: Set[A]) = s.foldRight(Set(Set.empty[A])){ case (ss, el) => el.map(_ + ss) ++  el }
+
