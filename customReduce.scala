@@ -7,9 +7,11 @@ def reduce[A](f: (A, A) => A, ls: List[A]): A = {
 		case true => {
 		  throw new NoSuchElementException
 		}
-		case false => fun(ls.tail, ls(0))
+		case false => fun(ls.tail, ls.head)
 	}
 }
+
+val sum = (a: Int, b: Int) => a + b
 
 println(reduce1(sum, List(1,2,3,4,5)))
 
