@@ -1,4 +1,7 @@
-Minimum steps to reach target by a Knight In Scala
+/*Minimum steps to reach target by a Knight In Scala.
+Given a square chessboard of N x N size, the position of Knight and position of a target is given.
+We need to find out minimum steps a Knight will take to reach the target position.
+*/
 
 def calculateMoves(size: Int, startRow: Int, startCol: Int, endRow: Int, endCol: Int) = {
   case class Pos(row: Int, col: Int)
