@@ -1,0 +1,36 @@
+Minimum steps to reach target by a Knight In Scala
+
+def calculateMoves(size: Int, startRow: Int, startCol: Int, endRow: Int, endCol: Int) = {
+  case class Pos(row: Int, col: Int)
+
+  def findMoves(from: Pos, target: Pos ): (Int, collection.mutable.Seq[Pos])= {
+    val pendingPos = collection.mutable.Queue[Pos](from)
+    val positionVisited = collection.mutable.HashMap[Pos, (Int, collection.mutable.Seq[Pos])](from -> (0, collection.mutable.Seq()))
+    var targetReached = false
+    while(pendingPos.nonEmpty && !targetReached) {
+      val p = pendingPos.dequeue()
+      possibleMoves(p) foreach { position =>
+        if ( position == target) targetReached = true
+        else if (!(positionVisited contains position)) pendingPos enqueue position
+        positionVisited += position -> ((positionVisited(p)._1 + 1,(positionVisited(p)._2 ++ collection.mutable.Seq(p))))
+      }
+    }
+
+    if (targetReached) positionVisited(target) else (-1, collection.mutable.Seq())
+  }
+  
+  def isValidPos(position: Pos): Boolean = ((0 until size) contains position.row) && ((0 until size) contains position.col)
+
+  def possibleMoves(position: Pos): collection.immutable.List[Pos] =
+    collection.immutable.List(Pos(position.row - 2, position.col + 1),
+        Pos(position.row - 2, position.col - 1),
+        Pos(position.row + 2, position.col + 1),
+        Pos(position.row + 2, position.col - 1),
+        Pos(position.row - 1  , position.col + 2),
+        Pos(position.row - 1  , position.col - 2),
+        Pos(position.row + 1  , position.col + 2),
+        Pos(position.row + 1  , position.col - 2)
+    ) filter( pos => isValidPos(pos))
+
+  findMoves(Pos(startRow,startCol),Pos(endRow,endCol))._1
+}
