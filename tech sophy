@@ -1,0 +1,9 @@
+interviw
+What is Monads. : A monad is a mechanism for sequencing computations.
+Difference b/w trait and interface. : When a trait is use'd the implementations of the methods come along too--which doesn't happen in an Interface.
+Difference b/w trait and scala abstract class. : traits system has an explicit way of declaring parent priority in a subclass to avoid typical problems associated with multiple inheritance.
+Write a distinct funtion on List of Int. : https://github.com/devendra-kr/scala4fun/blob/master/Distinct.scala
+Write a funtion to merge List of Map[String, Int]. : https://github.com/devendra-kr/scala4fun/blob/master/reduceListOfMap.scala
+How to add two Future funtion. :for{x <- Future(1); y <- Future(y) } yield(x + y)
+What is case class in scala. 
+How Akka actor fault tolerance: https://mycourses.aalto.fi/pluginfile.php/862667/mod_resource/content/1/lecture7.pdf
