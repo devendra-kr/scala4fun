@@ -48,7 +48,7 @@ object TransactionalLaws extends App {
       Some(dateFormat.parse(s).getTime)
     } catch {
       case ex: Exception =>
-        "Get Exception During DateFormat Parsing msg " + ex.getMessage + " stack trace " + ex.getStackTrace.mkString("\n")
+        println("Get Exception During DateFormat Parsing msg " + ex.getMessage + " stack trace " + ex.getStackTrace.mkString("\n"))
         None
     }
   }
