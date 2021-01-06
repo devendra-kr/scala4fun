@@ -1,4 +1,5 @@
 /*
+Qvantel test 
 Generate random List whose sum is zero.
 println(zeroSum(7))
 */
