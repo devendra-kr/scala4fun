@@ -1,4 +1,5 @@
-  def countReportes(ls: List[Int]) = {
+/*Qvantal writen test in scala */  
+def countReportes(ls: List[Int]) = {
     val map = ls.groupBy(x => x).mapValues(_.size)
     val sortedList = map.toSeq.sortBy(_._1).toList
     println(sortedList)
