@@ -29,3 +29,21 @@ def pivotIndex(nums: Array[Int]): Int = {
             res = res + nums(i)
         res
     }
+    
+    
+    // O(n) solution
+    def pivotIndex(nums: Array[Int]): Int = {
+        var sum = 0;
+        for(i <- 0 until nums.size){
+           sum += nums(i)
+        }
+        var leftSum = 0
+        var rightSum = sum
+        for(i <- 0 until nums.size){
+           rightSum -= nums(i)
+           if(leftSum == rightSum)
+                return i;
+            leftSum += nums(i)
+        }
+        return -1;
+    }
