@@ -1,0 +1,53 @@
+1. Find the number of islands
+public int numIslands(char[][] grid) {
+        int island = 0;
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid[0].length; j++){
+                if(grid[i][j] == '1'){
+                    ++island;
+                    dfs(i, j, grid);
+                }
+            }
+        }
+        return island;
+    }
+    
+  public void dfs(int r, int c, char[][] grid) {
+        int rowCount = grid.length;
+        int colCount = grid[0].length;
+        
+        int [][] direction = new int[][]{{0,1}, {1,0}, {0,-1}, {-1,0}};
+        /* 0, 1 --> UP
+           1, 0 --> RIGHT
+           0,-1 --> DOWN
+          -1, 0 --> LEFT
+        */
+                                         
+        if(r < 0 || c < 0 || r >= rowCount || c >= colCount || grid[r][c] == '0'){
+            return;
+        }
+        
+        grid[r][c] = '0';
+        
+        for(int[] dir: direction){ //ROW WISE TRAVEL AND KEEP COLUMN AT IT IS.
+            dfs(r+dir[0], c+dir[1], grid);
+        }
+    }
+
+2. Find a tour that visits all the stations (Gas Station OR Circular tour for petrol pumps).
+
+public int canCompleteCircuit(int[] gas, int[] cost) {
+        int currentStation = 0;
+        int currTank = 0;
+        int totalTank = 0;
+        
+        for(int i = 0; i < gas.length; i++){
+            currTank += gas[i] - cost[i];
+            totalTank += gas[i] - cost[i];
+            if(currTank < 0) {
+                 currentStation = i+1;
+                 currTank = 0;
+            }
+        }
+        return totalTank >= 0 ? currentStation : -1;
+    }
