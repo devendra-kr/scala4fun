@@ -1,0 +1,218 @@
+1. Trapping Rain Water
+def trap(height: Array[Int]): Int = {
+        if(height.isEmpty) return 0
+        
+        var valume = 0
+        val length = height.length
+        var left_max = new Array[Int](length)
+        var right_max = new Array[Int](length)
+        
+        left_max(0) = height(0)
+        for(i <- 1 until length)
+            left_max(i) = Math.max(height(i), left_max(i - 1))
+        
+        right_max(length - 1) = height(length - 1)
+        for(i <- length - 2 to 0 by -1)
+            right_max(i) = Math.max(height(i), right_max(i + 1))
+                                    
+        for(i <- 1 until length)
+            valume = valume + Math.min(left_max(i), right_max(i)) - height(i)
+        
+        return valume
+    }
+
+2. Majority element - N/2 Times
+object Solution {
+    def majorityElement(nums: Array[Int]): Int = {
+        var map = Map[Int, Int]()
+        for(i <- 0 until nums.length) {
+            if(map.contains(nums(i)))
+                map = map ++ Map(nums(i) -> (map.get(nums(i)).getOrElse(0) + 1))
+            else map = map ++ Map(nums(i) -> 1)
+        }
+        return map.toSeq.sortBy(-_._2).head._1
+    }
+}
+
+3. Search an element in a sorted and rotated array
+object Solution {
+    def search(nums: Array[Int], target: Int): Int = {
+        var (start, end) = (0, nums.length - 1)
+        while(start <= end) {
+            var mid = start + (end - start) / 2
+            if (nums(mid) == target) return mid
+            else if(nums(start) <= nums(mid))
+                if(target >= nums(start) && target < nums(mid))
+                    end = mid - 1
+                else start = mid + 1
+            else {
+                if(target <= nums(end) && target > nums(mid))
+                    start = mid + 1
+                else end = mid - 1
+            }
+        }
+        return -1
+    }
+}
+
+4. Find the maximum element in an array which is first increasing and then decreasing.
+
+5. Merge two sorted arrays (With/Without extra space)  
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        int[] newArray = new int[m+n];
+        while(i < m && j < n) {
+            if(nums1[i] <= nums2[j])
+                newArray[k++] = nums1[i++];
+            else newArray[k++] = nums2[j++];
+        }
+        while(i < m)
+            newArray[k++] = nums1[i++];
+        while(j < n)
+            newArray[k++] = nums2[j++];
+        for(i=0; i < newArray.length; i ++)
+            nums1[i] = newArray[i];
+    }
+}
+
+6. Search in a row wise and column wise sorted matrix
+def searchMatrix(matrix: Array[Array[Int]], target: Int): Boolean = {
+        val rowSize = matrix.size;
+        if(rowSize == 0)
+            return false;
+        val columnSize = matrix(0).size;
+        
+        var startIndex = 0;
+        var endIndex = rowSize * columnSize - 1;
+        
+        while(startIndex <= endIndex) {
+            var midIndex = (startIndex + endIndex) / 2;
+            val midElement = matrix(midIndex / columnSize)(midIndex % columnSize);
+            if(target == midElement)
+                return true;
+            else if(target < midElement)
+                endIndex = midIndex - 1;
+            else startIndex = midIndex + 1;
+        }
+        return false;
+    }
+
+7. Two pair sum
+    def twoSum(nums: Array[Int], target: Int): Array[Int] = {
+        var map = Map[Int, Int]()
+        for(i <- 0 until nums.length) {
+            if(map.get(nums(i)).isDefined) 
+                return Array(map(nums(i)), i)
+            map += ((target - nums(i)) -> i)
+        }
+        return Array(-1, -1)
+    }
+
+8. Triplet pari sum
+    def threeSum(nums: Array[Int]): List[List[Int]] = {
+        var seen = Map[Int, Int]()
+        var dumps = scala.collection.mutable.Set[Int]()
+        var ls = Set[List[Int]]()
+        
+        for(i <- 0 until nums.length) {
+            if(dumps.add(nums(i))) {
+                for(j <- i + 1 until nums.length) {
+                    val comp = -nums(i) - nums(j)
+                    if(seen.contains(comp) && seen(comp) == i) {
+                        ls = ls + List(nums(i), nums(j), comp).sorted
+                    } else seen = seen + (nums(j) -> i)
+                }
+            }
+        }
+        return ls.toList
+    }
+
+9. Segregate 0s and 1s in an array (OR) Segregate Even and Odd numbers
+    void segregate0and1(int[] arr, int n) {
+        // code here
+        int countZero = 0;
+        for(int i = 0; i < arr.length; i++) {
+            if(arr[i] == 0)
+                countZero++;
+        }
+        
+        for(int i = 0; i < countZero; i++)
+            arr[i] = 0;
+            
+        for(int i = countZero; i < arr.length; i++)
+            arr[i] = 1;
+        
+    }
+
+    void segregateEvenOdd(int arr[], int n) {
+        // code here
+        int left = 0;
+        int right = arr.length - 1;
+        
+        while(left < right) {
+            while(arr[left] % 2 == 0 && left < right)
+                left++;
+            while(arr[right] % 2 == 1 && left < right)
+                right--;
+                
+            if(left < right){
+                int tmp = arr[left];
+                arr[left] = arr[right];
+                arr[right] = tmp;
+            }
+        }
+    }
+
+10. Sort an array which contains 0,1 and 2’s
+	public static void sort012(int a[], int n)
+    {
+        // code here 
+        int countZero = 0;
+        int countOne = 0;
+        
+        for(int i = 0; i < a.length; i++) {
+            if(a[i] == 0)
+                countZero++;
+                
+            if(a[i] == 1)
+                countOne++;
+        }
+        
+        for(int i = 0; i < countZero; i++)
+            a[i] = 0;
+            
+        for(int i = countZero; i < (countZero + countOne); i++)
+            a[i] = 1;        
+            
+        for(int i = (countZero + countOne); i < a.length; i++)
+            a[i] = 2;
+    }
+
+11. Min Steps in Infinite Grid
+
+12. Largest Sum Contiguous Subarray
+    long maxSubarraySum(int arr[], int n){
+        
+        // Your code here
+        long max = arr[0];
+        long res = arr[0];
+        
+        for(int i = 1; i < arr.length; i++) {
+            
+            max = Math.max(arr[i], max+arr[i]);
+            res = Math.max(res, max);
+        }
+        return res;
+    }
+
+13. Maximum sum such that no two elements are adjacent
+
+14. Largest SubArray with equal number of 0s and 1s
+
+15. Maximize number of 0s by flipping a subarray
+
+16. Find zeroes to be flipped so that number of 1 is maximum    
+
