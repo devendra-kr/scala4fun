@@ -1,0 +1,277 @@
+1. Stack Ops :- Stack<Integer> stack = new Stack<Integer>();
+	a. stack.push(i);
+	b. stack.pop();
+	c. stack.peek();
+	d. stack.search(element);
+	e. stack.isEmpty();
+
+2. Queue Ops :- Queue<Integer> queue = new LinkedList<>();
+	a. queue.add(i);
+	b. queue.remove();
+	c. queue.peek();
+	d. queue.size();
+	e. queue.isEmpty();
+
+3. Queue using stack
+class Queue
+{
+    Stack<Integer> input = new Stack<Integer>(); 
+    Stack<Integer> output = new Stack<Integer>(); 
+    
+    /*The method pop which return the element poped out of the stack*/
+    int dequeue()
+    {
+	    // Your code here
+	    if(input.isEmpty())
+	        return -1;
+	    return input.pop();
+    }
+	
+    /* The method push to push element into the stack */
+    void enqueue(int x)
+    {
+	    // Your code here	
+	    while(!input.isEmpty()) {
+	        output.push(input.pop());
+	    }
+	    input.push(x);
+	    while(!output.isEmpty()) {
+	        input.push(output.pop());
+	    }
+    }
+}
+
+4. Stack using queues
+class Queues
+{
+    Queue<Integer> q1 = new LinkedList<Integer>();
+    Queue<Integer> q2 = new LinkedList<Integer>();
+    
+    //Function to push an element into stack using two queues.
+    void push(int a)
+    {
+	    // Your code here
+	    q2.add(a);
+	    while(!q1.isEmpty()){
+	        q2.add(q1.peek()); //peek is use for seen the top element in queue.
+	        q1.remove();
+	    }
+	    Queue<Integer> tmp = q1;
+	    q1 = q2;
+	    q2 = tmp;
+    }
+    
+    //Function to pop an element from stack using two queues. 
+    int pop()
+    {
+	    // Your code here
+	    if(q1.isEmpty())
+	        return -1;
+	    return q1.remove();
+    }
+	
+}
+
+5. Implement k stacks in one array
+class Stack {
+    int size;
+    int k;
+    int arr[];
+    int top[];
+    
+    Stack(int size, int k) {
+        this.size = size;
+        this.k = k;
+        arr = new int[size];
+        top = new int[size/k];
+        
+        init();
+    }
+    
+    void init() {
+        for(int i = 0; i < size/k; i++)
+            top[i] = minLimitSn(i) - 1;
+    }
+    
+    int maxLimitSn(int ns) {
+        return (size / k * (ns + 1) - 1);
+    }
+    
+    int minLimitSn(int ns) {
+        return size / k * (ns);
+    }
+    
+    void push(int x, int sn) {
+        if(top[sn] >= maxLimitSn(sn)) {
+            System.out.println("Stack overflow");
+            return;
+        }
+        arr[++top[sn]] = x;
+    }
+    
+    int pop(int sn) {
+        if(top[sn] < (minLimitSn(sn))){
+            System.out.println("Stack underflow");
+            return -1;
+        }
+        return arr[top[sn]--];
+            
+    }
+}
+
+6. Design a stack that supports getMin() in O(1) time and O(n) extra space
+class MinStack {
+    Stack<Node> stack;
+    
+    class Node {
+        int val;
+        int min;
+        Node(int val, int min) {
+            this.val = val;
+            this.min = min;
+        }
+    }
+    
+    MinStack() {
+        stack = new Stack<Node>();
+    }
+    
+    public void push(int x) {
+        if(stack.isEmpty())
+            stack.push(new Node(x, x));
+        else {
+            int min = Math.min(stack.peek().min, x);
+            stack.push(new Node(x, min));
+        }
+    }
+    
+    public int pop() {
+        return stack.pop().val;
+    }
+    
+    public int top() {
+        return stack.peek().val;
+    }
+    
+    public int getMin() {
+        return stack.peek().min;
+    }
+}
+
+7. Design a stack that supports getMin() in O(1) time and O(1) extra space
+class MinStack {
+    Stack<Integer> stack;
+    int min;
+    
+    MinStack() {
+        stack = new Stack<Integer>();
+    }
+    
+    public void push(int x) {
+        if(stack.isEmpty()) {
+            stack.push(x);
+            min = x;
+        }
+        else if(x >= min) 
+            stack.push(x);
+        else {
+            stack.push(2 * x - min);
+            min = x;
+        }
+        return;
+    }
+    
+    public int pop() {
+        if(stack.isEmpty())
+            return -1;
+        int y = stack.pop();
+        if(y < min)
+            min = 2 * min - y;
+        return y;
+    }
+    
+    public int getMin() {
+        if(stack.isEmpty())
+            return -1;
+        else return min;
+    }
+}
+
+8. Next Greater Element for every element In array ON Right Side
+public static long[] nextLargerElement(long[] arr, int n) {
+    Stack<Long> stack = new Stack<Long>();
+    long[] res = new long[arr.length];
+        
+    for(int i = arr.length - 1; i >= 0; i--) {
+        while(!stack.isEmpty() && arr[i] >= stack.peek()) {
+            stack.pop();
+        }
+        res[i] = stack.isEmpty() ? -1L : stack.peek();
+        stack.push(arr[i]);
+    }
+    return res;
+}
+
+9. Sliding window maximum. (Maximum of all subarrays of size k) — Deque approach.
+	static ArrayList<Integer> max_of_subarrays(int arr[], int n, int k) {
+        PriorityQueue<Integer> queue = new PriorityQueue<Integer>(
+            Collections.reverseOrder());
+            
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        
+        int i = 0;
+        for(; i < k; i++)
+            queue.add(arr[i]);
+        res.add(queue.peek()); 
+        queue.remove(arr[0]);
+
+       for(; i < n; i++) {
+            queue.add(arr[i]);
+            res.add(queue.peek()); 
+            queue.remove(arr[i - k + 1]);
+        }
+        return res;
+    }
+
+static ArrayList<Integer> max_of_subarrays(int arr[], int n, int k) {
+        // Your code here
+        Deque<Integer> Qi = new LinkedList<Integer>();
+        ArrayList<Integer> res = new ArrayList<Integer>();
+
+        int i = 0;
+        for (; i < k; ++i) {
+            while (!Qi.isEmpty() && arr[i] >= arr[Qi.peekLast()])
+                Qi.removeLast();
+            Qi.addLast(i);
+        }
+        
+        for (; i < n; ++i) {
+            res.add(arr[Qi.peek()]);
+            while ((!Qi.isEmpty()) && Qi.peek() <= i - k)
+                Qi.removeFirst();
+            while ((!Qi.isEmpty()) && arr[i] >= arr[Qi.peekLast()])
+                Qi.removeLast();
+            Qi.addLast(i);
+        }
+        res.add(arr[Qi.peek()]);
+        return res;
+    }    
+
+10. Length of the longest valid substring (Stack)
+	static int findMaxLen(String S) {
+        Stack<Integer> stack = new Stack<Integer>();
+        int count = 0;
+        stack.push(-1);
+        
+        for(int i = 0; i < S.length(); i++){
+            if(S.charAt(i) == '(')
+                stack.push(i);
+            else {
+                stack.pop();
+                if(!stack.isEmpty())
+                    count = Math.max(i - stack.peek(), count);
+                else stack.push(i);
+            }
+        }
+        return count;
+    }
