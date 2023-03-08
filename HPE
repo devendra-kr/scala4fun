@@ -1,0 +1,31 @@
+HPE scala interviw questions
+
+Level 1 : -
+1. Can we put multiple receive method in akka actor ?
+2. Scan method in filter ?
+3. Kubctl commands ?
+4. Github commands ?
+5. What is rebase and merge in GitHub ?
+6. How to create actor, code flow ?
+7. Number of ways to send messages to Actor ?
+8. In case if ask call , how do we replay back, what method used ?
+9. Kafka message ack number of ways ?
+
+Level 2 : - 
+1. What is deployment and service in k8 yaml file.
+2. How to do auto scale with K8
+3. What is Any and nothing. Diff b/w Any and Object
+4.  Val, lazy val and def ?
+5. Akka actor vs java thread ?
+6. What is Kafka Consumer group ?
+7. Kafka cluster size in current project, number of nodes ?
+8. How to do troubleshooting for production bug ?
+9. How to identify memory leak in prod dc ?
+10. How to connect to remote dc to debug memory leak ?
+11. Earlier Project related works ?
+12. Most awarded/challenging work til now ?
+13. Kafka-cli ?
+14. What problem/challenges you have face with Akka Actor ?
+15. Map vs flatmap ?
+16. What is either in scala ?
+17. How much load you are getting in your service ?
