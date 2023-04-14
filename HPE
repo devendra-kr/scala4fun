@@ -2,19 +2,50 @@ HPE scala interviw questions
 
 Level 1 : -
 1. Can we put multiple receive method in akka actor ?
-2. Scan method in filter ?
+Answer : 
+The Receive is just a type alias for PartialFunction[Any, Unit], so you can just define such anywhere and combine them using f1 orElse f2:
+eg: 
+val manageQueries: Receive = { case ... }
+val manageUpserts: Receive = { case ... }
+def receive = manageQueries.orElse(manageUpserts) 
+
+2. Scan method in list ?
+Answer: scan() method is a member of TraversableLike trait, it is similar to fold method but is used to apply a operation on each elements of collection and return a collection.
+val list = List(1, 2, 3 ,4)
+val list1 = list.scan(0)(_ + _)
+o/p : List(0, 1, 3, 6, 10)
+
+
 3. Kubctl commands ?
 4. Github commands ?
 5. What is rebase and merge in GitHub ?
+Answer: merge executes only one new commit. rebase typically executes multiple (number of commits in current branch).
+merge produces a new generated commit (the so called merge-commit). rebase only moves existing commits.
+
 6. How to create actor, code flow ?
 7. Number of ways to send messages to Actor ?
+Answer : aks and tell
+
 8. In case if ask call , how do we replay back, what method used ?
+Answer : tell
+
 9. Kafka message ack number of ways ?
+acks=0 —the write is considered successful the moment the request is sent out. No need to wait for a response.
+acks=1 — the leader must receive the record and respond before the write is considered successful.
+acks=all — all online in sync replicas must receive the write. If there are less than min. insync.
+
 
 Level 2 : - 
 1. What is deployment and service in k8 yaml file.
+A deployment is responsible for keeping a set of pods running.
+A service is responsible for enabling network access to a set of pods. 
+
 2. How to do auto scale with K8
+will configure auto scaling in K8s yanl file. based on minReplics and maxReplicas and CPU and Memory uages thresould.
+
 3. What is Any and nothing. Diff b/w Any and Object
+Any < anyRef == object
+
 4.  Val, lazy val and def ?
 5. Akka actor vs java thread ?
 6. What is Kafka Consumer group ?
