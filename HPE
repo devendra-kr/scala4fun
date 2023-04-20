@@ -60,3 +60,26 @@ Any < anyRef == object
 15. Map vs flatmap ?
 16. What is either in scala ?
 17. How much load you are getting in your service ?
+
+Level 4 :
+
+/*Given an array of strings words and an integer k, return the k most frequent strings.
+
+Return the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.
+
+
+Input: words = ["i","love","HPE","i","love","coding", "HPE"], k = 2
+Output: ["i","HPE"]
+Explanation: "i" and "love" are the two most frequent words.
+Note that "i" comes before "love" due to a lower alphabetical order.
+   */
+
+  def topMost(ls: List[String], k: Int): List[String] = {
+    ls.groupBy(x => x).map {
+      case (k, v) => (k, v.length)
+    }.toSeq.sortBy(x => (-x._2, x._1)).take(k).map(_._1).toList
+  }
+
+ println(topMost(List("i","love","HPE","i","love","coding", "HPE"), 2))
+
+ println(topMost(List(), 2))
